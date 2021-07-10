@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app :style="{background: $vuetify.theme.themes['light'].background}">
+    <v-app-bar app color="#212121">
       <div class="d-flex align-center">
         <h1 class="white--text font-weight-light">Zork Game</h1>
       </div>

@@ -18,25 +18,32 @@
     <!--login form-->
     <v-row>
       <v-col offset="3" cols="10" sm="4" md="6">
-        <!--username field-->
-        <v-text-field
-          :rules="userNameRules"
-          v-model="username"
-          label="Enter Username"
-          filled
-        ></v-text-field>
-        <v-spacer></v-spacer>
-        <!--password field-->
-        <v-text-field
-          :rules="passwordRules"
-          v-model="password"
-          type="password"
-          label="Enter Password"
-          filled
-        ></v-text-field>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <!--username field-->
+          <v-text-field
+            :rules="userNameRules"
+            v-model="username"
+            label="Enter Username"
+            filled
+          ></v-text-field>
+          <v-spacer></v-spacer>
+          <!--password field-->
+          <v-text-field
+            :rules="passwordRules"
+            v-model="password"
+            type="password"
+            label="Enter Password"
+            filled
+          ></v-text-field>
+        </v-form>
+        <br />
         <v-row cols="12" sm="6" md="4" justify="space-around">
           <!--login button-->
-          <v-btn color="primary" elevation="5" @click="sendUserInfo"
+          <v-btn
+            :disabled="!valid"
+            color="primary"
+            elevation="5"
+            @click="sendUserInfo"
             >Login</v-btn
           >
           <!--register button w/ form-->
@@ -110,7 +117,9 @@ export default {
   methods: {
     sendUserInfo() {
       // send user input to verify in database
-      this.alert = true;
+      if (this.$refs.form.validate() === true) {
+        this.alert = true;
+      }
     },
   },
 };
