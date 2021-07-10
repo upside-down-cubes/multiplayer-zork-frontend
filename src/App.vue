@@ -1,16 +1,16 @@
 <template>
   <v-app>
     <v-app-bar app color="#212121">
-      <v-btn to="/home" icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
       <div class="d-flex align-center">
-        <v-img
-          :src="require('./assets/zorklogo.png')"
-          height="90"
-          width="70"
-          contain
-        />
+        <!--redirect to home-->
+        <router-link :to="{ name: 'Home' }">
+          <v-img
+            :src="require('./assets/zorklogo.png')"
+            height="90"
+            width="70"
+            contain
+          />
+        </router-link>
         <h1 class="white--text font-weight-light">Zork Game</h1>
       </div>
     </v-app-bar>
