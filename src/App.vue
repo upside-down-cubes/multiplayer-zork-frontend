@@ -9,6 +9,15 @@
     <v-main>
       <Login />
     </v-main>
+
+    <v-footer fixed>
+      <v-switch
+        v-model="$vuetify.theme.dark"
+        style="color: white"
+        label="Dark Mode"
+        persistent-hint
+      ></v-switch>
+    </v-footer>
   </v-app>
 </template>
 
