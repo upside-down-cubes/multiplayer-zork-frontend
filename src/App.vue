@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar app color="#212121">
-      <div class="d-flex align-center">
+    <div>
+      <v-app-bar app dark color="#212121">
         <!--redirect to home-->
         <router-link :to="{ name: 'Home' }">
           <v-img
@@ -11,9 +11,17 @@
             contain
           />
         </router-link>
+
         <h1 class="white--text font-weight-light">Zork Game</h1>
-      </div>
-    </v-app-bar>
+
+        <v-spacer></v-spacer>
+
+        <!--redirect to user login-->
+        <v-btn :to="{ name: 'Login' }" icon>
+          <v-icon>mdi-account</v-icon>
+        </v-btn>
+      </v-app-bar>
+    </div>
 
     <v-main>
       <router-view></router-view>
