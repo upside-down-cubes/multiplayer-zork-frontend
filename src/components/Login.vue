@@ -40,6 +40,7 @@
         <v-row cols="12" sm="6" md="4" justify="space-around">
           <!--login button-->
           <v-btn
+            :loading="loading"
             :disabled="!valid"
             color="primary"
             elevation="5"
@@ -105,6 +106,7 @@ export default {
   name: "Login",
 
   data: () => ({
+    loading: false,
     valid: true,
     username: "",
     userNameRules: [(v) => !!v || "Username can not be empty"],
@@ -115,11 +117,14 @@ export default {
   }),
 
   methods: {
-    sendUserInfo() {
+    async sendUserInfo() {
+      this.loading = true;
+      await new Promise(resolve => setTimeout(resolve,1000))
       // send user input to verify in database
       if (this.$refs.form.validate() === true) {
         this.alert = true;
       }
+      this.loading = false;
     },
   },
 };
