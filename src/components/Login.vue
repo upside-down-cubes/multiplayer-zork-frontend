@@ -1,5 +1,13 @@
 <template v-model="$vuetify.theme.dark">
   <v-container>
+    <v-alert
+      :value="alert"
+      border="bottom"
+      color="green"
+      elevation="2"
+      dismissible
+      type="success"
+      >You successfully log in as {{ username }}</v-alert>
     <div class="text-center">
       <h1 class="font-weight-light">Login Page</h1>
       <br />
@@ -19,7 +27,9 @@
           filled
         ></v-text-field>
         <v-row cols="12" sm="6" md="4" justify="space-around">
-          <v-btn color="primary" elevation="5" @click="sendUserInfo">Login</v-btn>
+          <v-btn color="primary" elevation="5" @click="sendUserInfo">
+            Login
+          </v-btn>
           <v-dialog v-model="form" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark v-bind="attrs" v-on="on">
@@ -80,12 +90,14 @@ export default {
   data: () => ({
     username: "",
     password: "",
+    alert: false,
     form: false,
   }),
 
   methods: {
     sendUserInfo() {
       // send user input to verify in database
+      this.alert = true;
     },
   },
 };
