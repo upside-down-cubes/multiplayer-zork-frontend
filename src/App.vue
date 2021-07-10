@@ -2,6 +2,12 @@
   <v-app>
     <v-app-bar app color="#212121">
       <div class="d-flex align-center">
+        <v-img
+          :src="require('./assets/zorklogo.png')"
+          height="90"
+          width="70"
+          contain
+        />
         <h1 class="white--text font-weight-light">Zork Game</h1>
       </div>
     </v-app-bar>
