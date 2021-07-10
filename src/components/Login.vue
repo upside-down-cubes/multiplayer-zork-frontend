@@ -7,7 +7,8 @@
       elevation="2"
       dismissible
       type="success"
-      >You successfully log in as {{ username }}</v-alert>
+      >You successfully log in as {{ username }}</v-alert
+    >
     <div class="text-center">
       <h1 class="font-weight-light">Login Page</h1>
       <br />
@@ -15,21 +16,23 @@
     <v-row>
       <v-col offset="3" cols="10" sm="4" md="6">
         <v-text-field
+          :rules="userNameRules"
           v-model="username"
           label="Enter Username"
           filled
         ></v-text-field>
         <v-spacer></v-spacer>
         <v-text-field
+          :rules="passwordRules"
           v-model="password"
           type="password"
           label="Enter Password"
           filled
         ></v-text-field>
         <v-row cols="12" sm="6" md="4" justify="space-around">
-          <v-btn color="primary" elevation="5" @click="sendUserInfo">
-            Login
-          </v-btn>
+          <v-btn color="primary" elevation="5" @click="sendUserInfo"
+            >Login</v-btn
+          >
           <v-dialog v-model="form" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark v-bind="attrs" v-on="on">
@@ -88,8 +91,11 @@ export default {
   name: "Login",
 
   data: () => ({
+    valid: true,
     username: "",
+    userNameRules: [(v) => !!v || "Username can not be empty"],
     password: "",
+    passwordRules: [(v) => !!v || "Password can not be empty"],
     alert: false,
     form: false,
   }),
