@@ -2,7 +2,7 @@
   <v-container>
     <div class="text-center">
       <h1 class="font-weight-light">Login Page</h1>
-      <br>
+      <br />
     </div>
     <v-row>
       <v-col offset="3" cols="10" sm="4" md="6">
@@ -14,14 +14,60 @@
         <v-spacer></v-spacer>
         <v-text-field
           v-model="password"
+          type="password"
           label="Enter Password"
           filled
         ></v-text-field>
-        <v-btn
-            color="primary"
-            elevation="5"
-            @click="sendUserInfo"
-        >Login</v-btn>
+        <v-row cols="12" sm="6" md="4" justify="space-around">
+          <v-btn color="primary" elevation="5" @click="sendUserInfo">Login</v-btn>
+          <v-dialog v-model="form" persistent max-width="600px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                Register
+              </v-btn>
+            </template>
+            <v-spacer></v-spacer>
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">User Profile</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="username"
+                        label="Username*"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="password"
+                        label="Password*"
+                        type="password"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field label="Email*" required></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="form = false">
+                  Close
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="form = false">
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
@@ -34,11 +80,13 @@ export default {
   data: () => ({
     username: "",
     password: "",
+    form: false,
   }),
+
   methods: {
-    sendUserInfo(){
-      // send user input to vertify in database
-    }
-  }
+    sendUserInfo() {
+      // send user input to verify in database
+    },
+  },
 };
 </script>
