@@ -1,5 +1,6 @@
 <template v-model="$vuetify.theme.dark">
   <v-container>
+    <!--alert message-->
     <v-alert
       :value="alert"
       border="bottom"
@@ -9,12 +10,15 @@
       type="success"
       >You successfully log in as {{ username }}</v-alert
     >
+    <!--page title-->
     <div class="text-center">
       <h1 class="font-weight-light">Login Page</h1>
       <br />
     </div>
+    <!--login form-->
     <v-row>
       <v-col offset="3" cols="10" sm="4" md="6">
+        <!--username field-->
         <v-text-field
           :rules="userNameRules"
           v-model="username"
@@ -22,6 +26,7 @@
           filled
         ></v-text-field>
         <v-spacer></v-spacer>
+        <!--password field-->
         <v-text-field
           :rules="passwordRules"
           v-model="password"
@@ -30,9 +35,11 @@
           filled
         ></v-text-field>
         <v-row cols="12" sm="6" md="4" justify="space-around">
+          <!--login button-->
           <v-btn color="primary" elevation="5" @click="sendUserInfo"
             >Login</v-btn
           >
+          <!--register button w/ form-->
           <v-dialog v-model="form" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark v-bind="attrs" v-on="on">
