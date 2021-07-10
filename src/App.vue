@@ -1,6 +1,9 @@
 <template>
   <v-app>
     <v-app-bar app color="#212121">
+      <v-btn to="/home" icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
       <div class="d-flex align-center">
         <v-img
           :src="require('./assets/zorklogo.png')"
@@ -13,7 +16,7 @@
     </v-app-bar>
 
     <v-main>
-      <Login />
+      <router-view></router-view>
     </v-main>
 
     <v-footer fixed>
@@ -28,14 +31,8 @@
 </template>
 
 <script>
-import Login from "./components/Login";
-
 export default {
   name: "App",
-
-  components: {
-    Login,
-  },
 
   data: () => ({
     //
