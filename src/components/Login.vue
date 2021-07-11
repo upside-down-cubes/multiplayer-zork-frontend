@@ -119,7 +119,7 @@ export default {
   methods: {
     async sendUserInfo() {
       this.loading = true;
-      await new Promise(resolve => setTimeout(resolve,1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       // send user input to verify in database
       if (this.$refs.form.validate() === true) {
         this.alert = true;
