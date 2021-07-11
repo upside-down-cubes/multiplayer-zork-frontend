@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <h3>Home</h3>
-  </div>
+  <v-container>
+    <div class="text-center">
+      <h1>Welcome to multiplayer Zork Game</h1>
+    </div>
+  </v-container>
 </template>
 
 <script>
