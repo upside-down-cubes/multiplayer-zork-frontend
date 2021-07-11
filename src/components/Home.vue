@@ -46,7 +46,17 @@
     </div>
     <br />
     <v-row cols="12" sm="6" md="4" justify="space-around">
-      <v-btn color="primary" elevation="5" @click="startGame">Start Game</v-btn>
+      <v-btn
+        color="primary"
+        :loading="loading"
+        :disabled="loading"
+        elevation="5"
+        @click="loader = 'loading'"
+        >Start Game
+        <template v-slot:loader>
+          <span>Loading...</span>
+        </template>
+      </v-btn>
     </v-row>
     <br />
     <br />
@@ -71,10 +81,24 @@ export default {
           src: require("../assets/zork3.jpeg"),
         },
       ],
+      loader: null,
+      loading: false,
     };
   },
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
+
+      setTimeout(() => (this[l] = false), 3000);
+
+      this.loader = null;
+    },
+  },
   methods: {
-    startGame() {},
+    sendUserInfo() {
+      console.log("clocked");
+    },
   },
 };
 </script>
