@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-content>
+    <v-main>
       <div class="text-center">
         <h1 class="font-weight-bold">Welcome to Multiplayer Zork Game</h1>
       </div>
@@ -14,7 +14,7 @@
           transition="fade-transition"
         ></v-carousel-item>
       </v-carousel>
-    </v-content>
+    </v-main>
     <br />
     <div class="text-body-1">
       <p class="font-weight-light">
@@ -46,9 +46,7 @@
     </div>
     <br />
     <v-row cols="12" sm="6" md="4" justify="space-around">
-      <v-btn :loading="loading" color="primary" elevation="5" @click="startGame"
-        >Start Game</v-btn
-      >
+      <v-btn color="primary" elevation="5" @click="startGame">Start Game</v-btn>
     </v-row>
     <br />
     <br />
