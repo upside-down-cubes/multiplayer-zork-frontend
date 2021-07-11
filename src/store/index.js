@@ -5,25 +5,19 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    isLoggedIn: false,
+    loggedIn: false,
     username: null,
-    name: null,
-    role: "",
   },
-  mutations: {
+  mutations: {},
+  actions: {
     setLoggedInUser(state, payload) {
-      state.isLoggedIn = true;
+      state.loggedIn = payload.loggedIn;
       state.username = payload.username;
-      state.name = payload.name;
-      state.role = payload.role;
     },
     clearUser(state) {
-      state.isLoggedIn = false;
+      state.loggedIn = false;
       state.username = null;
-      state.name = null;
-      state.role = "";
     },
   },
-  actions: {},
   modules: {},
 });

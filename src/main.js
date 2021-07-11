@@ -27,9 +27,13 @@ const router = new VueRouter({ mode: "history", routes: routes });
 
 router.beforeEach(async (to, from, next) => {
   let response = await Vue.axios.get("/api/test");
-  console.log(response);
-  if (to.name !== "Login" && to.name !== "Home") next({ name: "Login" });
-  else next();
+  await store.dispatch("setLoggedInUser", response.data);
+  let loggedIn = store.state.loggedIn;
+  if (to.name !== "Login" && to.name !== "Home" && !loggedIn) {
+    next({ name: "Login" });
+  } else {
+    next();
+  }
 });
 
 Vue.config.productionTip = false;
