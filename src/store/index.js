@@ -10,7 +10,9 @@ export default new Vuex.Store({
   },
   mutations: {},
   actions: {
+    // TODO: loggedIn is undefined from backend, but there is "success" boolean
     setLoggedInUser(state, payload) {
+      console.log("from store " + payload.success);
       state.loggedIn = payload.loggedIn;
       state.username = payload.username;
     },

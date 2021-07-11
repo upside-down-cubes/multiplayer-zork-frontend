@@ -4,16 +4,15 @@
     <v-alert
       :value="alert"
       border="bottom"
-      color="green"
+      :color="colorAlert"
       elevation="2"
       dismissible
-      type="success"
-      >You successfully log in as {{ username }}</v-alert
+      type="info"
+      >{{ contentAlert }}</v-alert
     >
     <!--page title-->
     <div class="text-center">
       <h1 class="font-weight-light">Login Page</h1>
-      <br />
     </div>
     <!--login form-->
     <v-row>
@@ -102,11 +101,15 @@
 </template>
 
 <script>
+import Vue from "vue";
+
 export default {
   name: "Login",
 
   data: () => ({
     loading: false,
+    contentAlert: "",
+    colorAlert: "",
     valid: true,
     username: "",
     userNameRules: [(v) => !!v || "Username can not be empty"],
@@ -119,11 +122,28 @@ export default {
   methods: {
     async sendUserInfo() {
       this.loading = true;
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // send user input to verify in database
+      // check again if username and password are not empty
       if (this.$refs.form.validate() === true) {
-        this.alert = true;
+        // make a form to send to backend
+        let fromData = new FormData();
+        fromData.append("username", this.username);
+        fromData.append("password", this.password);
+        // send username, password to api/login via post method
+        let result = await Vue.axios.post("/api/login", fromData);
+        // result will be
+        // { success: boolean,
+        // message: String }
+        console.log("clicked login button");
+        console.log(result.data);
+        if (result.data.success) {
+          console.log("success");
+          this.colorAlert = "green";
+          this.contentAlert = "You successfully log in as " + this.username;
+        }
       }
+      this.colorAlert = "red";
+      this.alert = true;
+      this.contentAlert = "Fail to log in. Please try again";
       this.loading = false;
     },
   },
