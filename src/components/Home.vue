@@ -16,7 +16,7 @@
       </v-carousel>
     </v-content>
     <br />
-    <div class="text-center">
+    <div class="text-body-1">
       <p class="font-weight-light">
         Zork is set in "the ruins of an ancient empire lying far underground".
         The player is a nameless adventurer "who is venturing into this
