@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import Login from "@/components/Login";
 import Home from "@/components/Home";
 import store from "@/store";
+import Account from "@/components/Account";
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,11 @@ const routes = [
     path: "/home",
     component: Home,
   },
+  {
+    name: "Account",
+    path: "/account",
+    component: Account,
+  },
 ];
 
 const router = new VueRouter({ mode: "history", routes: routes });
@@ -30,7 +36,7 @@ router.beforeEach(async (to, from, next) => {
   console.log(store.state.username);
   let loggedIn = store.state.loggedIn;
   if (to.name === "Login" && loggedIn) {
-    next({ name: "Home" });
+    next({ name: "Account" });
   } else if (to.name !== "Login" && to.name !== "Home" && !loggedIn) {
     next({ name: "Login" });
   } else {
