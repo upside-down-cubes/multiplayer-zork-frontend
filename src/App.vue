@@ -53,6 +53,7 @@
 
 <script>
 import Vue from "vue";
+import store from "./store";
 
 export default {
   name: "App",
@@ -67,10 +68,13 @@ export default {
       let result = await Vue.axios.get("/api/logout");
       console.log("clicked logout button");
       console.log(result.data);
-      if (result.data.success) {
+      if (result.data.success && this.$store.state.username !== null) {
         console.log("success");
         this.colorAlert = "green";
-        this.contentAlert = "You successfully log out as " + this.username;
+        this.contentAlert =
+          "You successfully log out as " + this.$store.state.username;
+        await store.dispatch("clearUser", result.data);
+        console.log("done dispatch");
       } else {
         console.log("fail");
         this.colorAlert = "red";
