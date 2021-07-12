@@ -17,11 +17,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    // TODO: loggedIn is undefined from backend, but there is "success" boolean
     setLoggedInUser({ commit }, payload) {
-      console.log("from store ");
-      console.log(payload.loggedIn);
-      console.log(payload.username);
       commit("setIsLoggedInUser", payload.loggedIn);
       commit("setUserName", payload.username);
     },
