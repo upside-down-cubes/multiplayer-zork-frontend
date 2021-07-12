@@ -2,7 +2,7 @@
   <v-container>
     <!--alert message-->
     <v-alert
-      :value="alert"
+      v-model="alert"
       border="bottom"
       :color="colorAlert"
       elevation="2"
@@ -88,7 +88,7 @@
                 <v-btn color="blue darken-1" text @click="form = false">
                   Close
                 </v-btn>
-                <v-btn color="blue darken-1" text @click="form = false">
+                <v-btn color="blue darken-1" text @click="createUser">
                   Save
                 </v-btn>
               </v-card-actions>
@@ -123,13 +123,13 @@ export default {
     async sendUserInfo() {
       this.loading = true;
       // check again if username and password are not empty
-      if (this.$refs.form.validate() === true) {
+      if (this.$refs.form.validate()) {
         // make a form to send to backend
-        let fromData = new FormData();
-        fromData.append("username", this.username);
-        fromData.append("password", this.password);
+        let formData = new FormData();
+        formData.append("username", this.username);
+        formData.append("password", this.password);
         // send username, password to api/login via post method
-        let result = await Vue.axios.post("/api/login", fromData);
+        let result = await Vue.axios.post("/api/login", formData);
         // result will be
         // { success: boolean,
         // message: String }
@@ -139,12 +139,37 @@ export default {
           console.log("success");
           this.colorAlert = "green";
           this.contentAlert = "You successfully log in as " + this.username;
+        } else {
+          console.log("fail");
+          this.colorAlert = "red";
+          this.contentAlert = "Fail to log in. Please try again";
         }
       }
-      this.colorAlert = "red";
       this.alert = true;
-      this.contentAlert = "Fail to log in. Please try again";
       this.loading = false;
+    },
+    async createUser() {
+      if (this.$refs.form.validate()) {
+        // make a form to send to backend
+        let formData = new FormData();
+        formData.append("username", this.username);
+        formData.append("password", this.password);
+        // send username, password to api/signup via post method
+        let result = await Vue.axios.post("/api/signup", formData);
+        console.log("clicked save button");
+        console.log(result.data);
+        if (result.data.success) {
+          console.log(result.data.message);
+          this.colorAlert = "green";
+          this.contentAlert = "You successfully sign up as " + this.username;
+        } else {
+          console.log(result.data.message);
+          this.colorAlert = "red";
+          this.contentAlert = "Fail to sign up";
+        }
+        this.alert = true;
+        this.form = false;
+      }
     },
   },
 };
