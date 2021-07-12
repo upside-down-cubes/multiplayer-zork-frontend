@@ -76,9 +76,6 @@
                         required
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
-                      <v-text-field label="Email*" required></v-text-field>
-                    </v-col>
                   </v-row>
                 </v-container>
                 <small>*indicates required field</small>
@@ -102,6 +99,7 @@
 
 <script>
 import Vue from "vue";
+import router from "../router";
 
 export default {
   name: "Login",
@@ -136,16 +134,14 @@ export default {
         console.log("clicked login button");
         console.log(result.data);
         if (result.data.success) {
-          console.log("success");
-          this.colorAlert = "green";
-          this.contentAlert = "You successfully log in as " + this.username;
+          await router.push({ name: "Account" });
         } else {
           console.log("fail");
           this.colorAlert = "red";
           this.contentAlert = "Fail to log in. Please try again";
+          this.alert = true;
         }
       }
-      this.alert = true;
       this.loading = false;
     },
     async createUser() {

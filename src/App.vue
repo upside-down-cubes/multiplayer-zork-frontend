@@ -68,7 +68,12 @@ export default {
       let result = await Vue.axios.get("/api/logout");
       console.log("clicked logout button");
       console.log(result.data);
-      if (result.data.success && this.$store.state.username !== null) {
+      console.log("username: " + this.$store.state.username);
+      if (
+        result.data.success &&
+        this.$store.state.username !== null &&
+        this.$store.state.username !== undefined
+      ) {
         console.log("success");
         this.colorAlert = "green";
         this.contentAlert =
