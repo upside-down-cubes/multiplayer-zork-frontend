@@ -14,11 +14,6 @@
         ></v-text-field>
         <p class="font-weight-light">This is User Input: {{ commandInput }}</p>
         <br />
-<!--        <v-row cols="12" sm="6" md="4" justify="space-around">-->
-<!--          <v-btn color="primary" elevation="5" @click="sendCommandLineProblem"-->
-<!--            >Send Command</v-btn-->
-<!--          >-->
-<!--        </v-row>-->
       </v-col>
     </v-row>
   </v-container>
