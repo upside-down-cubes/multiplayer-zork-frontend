@@ -1,16 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-<<<<<<< HEAD
-import Login from "../components/Login";
-import Home from "../components/Home";
-=======
 
 import Login from "@/components/Login";
 import Home from "@/components/Home";
 import store from "@/store";
 import Account from "@/components/Account";
 import Start from "@/components/Start";
->>>>>>> master
 
 Vue.use(VueRouter);
 
@@ -25,8 +20,6 @@ const routes = [
     path: "/home",
     component: Home,
   },
-<<<<<<< HEAD
-=======
   {
     name: "Account",
     path: "/account",
@@ -37,21 +30,11 @@ const routes = [
     path: "/start",
     component: Start,
   },
->>>>>>> master
 ];
 
 const router = new VueRouter({ mode: "history", routes: routes });
 
 router.beforeEach(async (to, from, next) => {
-<<<<<<< HEAD
-  let response = await Vue.axios.get("/api/test");
-  console.log(response);
-  if (to.name !== "Login" && to.name !== "Home") next({ name: "Login" });
-  else next();
-});
-
-export default router
-=======
   let response = await Vue.axios.get("/api/whoami");
   await store.dispatch("setLoggedInUser", response.data);
   let loggedIn = store.state.loggedIn;
@@ -68,4 +51,3 @@ export default router
 });
 
 export default router;
->>>>>>> master

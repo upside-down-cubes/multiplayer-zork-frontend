@@ -3,7 +3,7 @@
     <div class="text-center">
       <h1 class="font-weight-light">This is start page</h1>
     </div>
-    <br/>
+    <br />
     <v-row cols="12" sm="6" md="4" justify="space-around">
       <v-btn
         color="primary"

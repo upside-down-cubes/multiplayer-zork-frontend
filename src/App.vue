@@ -17,9 +17,37 @@
         <v-spacer></v-spacer>
 
         <!--redirect to user login-->
-        <v-btn :to="{ name: 'Login' }" icon>
-          <v-icon>mdi-account</v-icon>
-        </v-btn>
+        <v-dialog transition="dialog-top-transition" max-width="600">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-blind="attrs" icon v-on="on">
+              <v-icon>mdi-account</v-icon>
+            </v-btn>
+          </template>
+          <template v-slot:default="dialog">
+            <v-card class="mx-auto" max-width="344" outlined>
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <div class="text-overline mb-4">ACCOUNT</div>
+                  <v-list-item-title class="text-h5 mb-1">
+                    {{ userName }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle>Status: Online</v-list-item-subtitle>
+                </v-list-item-content>
+
+                <v-list-item-avatar size="60" color="grey">
+                  <v-icon dark> mdi-account </v-icon>
+                </v-list-item-avatar>
+              </v-list-item>
+
+              <v-card-actions>
+                <v-btn text> Logout </v-btn>
+              </v-card-actions>
+              <v-card-actions class="justify-end">
+                <v-btn text @click="dialog.value = false">Close</v-btn>
+              </v-card-actions>
+            </v-card>
+          </template>
+        </v-dialog>
         <v-btn @click="logout">
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
@@ -58,6 +86,7 @@ import store from "./store";
 export default {
   name: "App",
   data: () => ({
+    username: store.state.username,
     contentAlert: "",
     colorAlert: "",
     alert: false,
