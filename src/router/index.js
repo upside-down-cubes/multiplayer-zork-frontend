@@ -5,7 +5,7 @@ import Login from "@/components/Login";
 import Home from "@/components/Home";
 import store from "@/store";
 import Account from "@/components/Account";
-import Start from "@/components/Start";
+import CommandLine from "@/components/CommandLine";
 
 Vue.use(VueRouter);
 
@@ -26,9 +26,9 @@ const routes = [
     component: Account,
   },
   {
-    name: "Start",
-    path: "/start",
-    component: Start,
+    name: "CommandLine",
+    path: "/commandline",
+    component: CommandLine,
   },
 ];
 

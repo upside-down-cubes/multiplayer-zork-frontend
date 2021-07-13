@@ -93,7 +93,7 @@ export default {
       this[l] = !this[l];
 
       setTimeout(() => (this[l] = false), 3000);
-      await router.push({ name: "Start" });
+      await router.push({ name: "CommandLine" });
 
       this.loader = null;
     },
