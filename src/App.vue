@@ -16,13 +16,43 @@
 
         <v-spacer></v-spacer>
 
+        <v-menu bottom min-width="200px" open-on-hover offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn icon x-large v-on="on">
+              <v-avatar size="48">
+                <v-icon>mdi-account</v-icon>
+              </v-avatar>
+            </v-btn>
+          </template>
+          <v-card class="mx-auto" max-width="344" outlined>
+            <v-list-item three-line>
+              <v-list-item-content>
+                <div class="text-overline mb-4">USERNAME</div>
+                <v-list-item-title class="text-h5 mb-1">
+                  {{ userName }}
+                </v-list-item-title>
+                <v-list-item-subtitle>Status: Online</v-list-item-subtitle>
+              </v-list-item-content>
+
+              <v-list-item-avatar size="60" color="grey">
+                <v-icon dark> mdi-account </v-icon>
+              </v-list-item-avatar>
+            </v-list-item>
+
+            <v-card-actions justify="space-around">
+              <v-btn text :to="{ name: 'Account' }"> Account </v-btn>
+              <v-btn text @click="logout"> Logout </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-menu>
+
         <!--redirect to user login-->
-        <v-btn :to="{ name: 'Login' }" icon>
-          <v-icon>mdi-account</v-icon>
-        </v-btn>
-        <v-btn @click="logout">
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
+        <!--        <v-btn :to="{ name: 'Login' }" icon>-->
+        <!--          <v-icon>mdi-account</v-icon>-->
+        <!--        </v-btn>-->
+        <!--        <v-btn @click="logout">-->
+        <!--          <v-icon>mdi-dots-vertical</v-icon>-->
+        <!--        </v-btn>-->
       </v-app-bar>
     </div>
 
@@ -61,6 +91,7 @@ export default {
     contentAlert: "",
     colorAlert: "",
     alert: false,
+    userName: "",
   }),
   methods: {
     async logout() {
@@ -86,6 +117,9 @@ export default {
         this.contentAlert = "Fail to log out. Please try again";
       }
       this.alert = true;
+    },
+    async isLoggedIn() {
+      return this.$store.state.loggedIn;
     },
   },
 };
