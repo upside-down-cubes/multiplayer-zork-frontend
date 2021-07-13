@@ -17,7 +17,7 @@
         <v-spacer></v-spacer>
 
         <!--redirect to user login-->
-        <v-dialog transition="dialog-top-transition" max-width="600">
+        <v-dialog transition="dialog-top-transition" max-width="345">
           <template v-slot:activator="{ on, attrs }">
             <v-btn v-blind="attrs" icon v-on="on">
               <v-icon>mdi-account</v-icon>
@@ -86,7 +86,7 @@ import store from "./store";
 export default {
   name: "App",
   data: () => ({
-    username: store.state.username,
+    userName: store.state.username,
     contentAlert: "",
     colorAlert: "",
     alert: false,
@@ -108,7 +108,7 @@ export default {
         this.contentAlert =
           "You successfully log out as " + this.$store.state.username;
         await store.dispatch("clearUser", result.data);
-        console.log("done dispatch");
+        console.log("done dispatch: username = " + this.$store.state.username);
       } else {
         console.log("fail");
         this.colorAlert = "red";
