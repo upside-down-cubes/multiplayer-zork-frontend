@@ -66,6 +66,8 @@
 </template>
 
 <script>
+import router from "../router";
+
 export default {
   name: "Home",
   data() {
@@ -86,18 +88,19 @@ export default {
     };
   },
   watch: {
-    loader() {
+    async loader() {
       const l = this.loader;
       this[l] = !this[l];
 
       setTimeout(() => (this[l] = false), 3000);
+      await router.push({ name: "Start" });
 
       this.loader = null;
     },
   },
   methods: {
-    sendUserInfo() {
-      console.log("clocked");
+    async sendUserInfo() {
+      console.log("from function sendUserInfo");
     },
   },
 };
