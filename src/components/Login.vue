@@ -2,18 +2,17 @@
   <v-container>
     <!--alert message-->
     <v-alert
-      :value="alert"
+      v-model="alert"
       border="bottom"
-      color="green"
+      :color="colorAlert"
       elevation="2"
       dismissible
-      type="success"
-      >You successfully log in as {{ username }}</v-alert
+      type="info"
+      >{{ contentAlert }}</v-alert
     >
     <!--page title-->
     <div class="text-center">
       <h1 class="font-weight-light">Login Page</h1>
-      <br />
     </div>
     <!--login form-->
     <v-row>
@@ -77,9 +76,6 @@
                         required
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
-                      <v-text-field label="Email*" required></v-text-field>
-                    </v-col>
                   </v-row>
                 </v-container>
                 <small>*indicates required field</small>
@@ -89,7 +85,7 @@
                 <v-btn color="blue darken-1" text @click="form = false">
                   Close
                 </v-btn>
-                <v-btn color="blue darken-1" text @click="form = false">
+                <v-btn color="blue darken-1" text @click="createUser">
                   Save
                 </v-btn>
               </v-card-actions>
@@ -102,11 +98,16 @@
 </template>
 
 <script>
+import Vue from "vue";
+import router from "../router";
+
 export default {
   name: "Login",
 
   data: () => ({
     loading: false,
+    contentAlert: "",
+    colorAlert: "",
     valid: true,
     username: "",
     userNameRules: [(v) => !!v || "Username can not be empty"],
@@ -119,12 +120,52 @@ export default {
   methods: {
     async sendUserInfo() {
       this.loading = true;
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // send user input to verify in database
-      if (this.$refs.form.validate() === true) {
-        this.alert = true;
+      // check again if username and password are not empty
+      if (this.$refs.form.validate()) {
+        // make a form to send to backend
+        let formData = new FormData();
+        formData.append("username", this.username);
+        formData.append("password", this.password);
+        // send username, password to api/login via post method
+        let result = await Vue.axios.post("/api/login", formData);
+        // result will be
+        // { success: boolean,
+        // message: String }
+        console.log("clicked login button");
+        console.log(result.data);
+        if (result.data.success) {
+          await router.push({ name: "Account" });
+        } else {
+          console.log("fail");
+          this.colorAlert = "red";
+          this.contentAlert = "Fail to log in. Please try again";
+          this.alert = true;
+        }
       }
       this.loading = false;
+    },
+    async createUser() {
+      if (this.$refs.form.validate()) {
+        // make a form to send to backend
+        let formData = new FormData();
+        formData.append("username", this.username);
+        formData.append("password", this.password);
+        // send username, password to api/signup via post method
+        let result = await Vue.axios.post("/api/signup", formData);
+        console.log("clicked save button");
+        console.log(result.data);
+        if (result.data.success) {
+          console.log(result.data.message);
+          this.colorAlert = "green";
+          this.contentAlert = "You successfully sign up as " + this.username;
+        } else {
+          console.log(result.data.message);
+          this.colorAlert = "red";
+          this.contentAlert = "Fail to sign up";
+        }
+        this.alert = true;
+        this.form = false;
+      }
     },
   },
 };
