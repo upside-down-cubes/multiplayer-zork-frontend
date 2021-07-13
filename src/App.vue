@@ -27,11 +27,27 @@
           <v-card class="mx-auto" max-width="344" outlined>
             <v-list-item three-line>
               <v-list-item-content>
-                <div class="text-overline mb-4">USERNAME</div>
-                <v-list-item-title class="text-h5 mb-1">
+                <div
+                  v-if="this.$store.state.loggedIn === true"
+                  class="text-overline mb-4"
+                >
+                  USERNAME
+                </div>
+                <v-list-item-title
+                  v-if="this.$store.state.loggedIn === true"
+                  class="text-h5 mb-1"
+                >
                   {{ this.$store.state.username }}
                 </v-list-item-title>
-                <v-list-item-subtitle>Status: Online</v-list-item-subtitle>
+                <v-list-item-title v-else class="text-h5 mb-1">
+                  Please log in
+                </v-list-item-title>
+                <v-list-item-subtitle v-if="this.$store.state.loggedIn === true"
+                  >Status: Online</v-list-item-subtitle
+                >
+                <v-list-item-subtitle v-else
+                  >Status: Offline</v-list-item-subtitle
+                >
               </v-list-item-content>
 
               <v-list-item-avatar size="60" color="grey">
@@ -40,8 +56,8 @@
             </v-list-item>
 
             <v-card-actions justify="space-around">
-              <v-btn text :to="{ name: 'Account' }"> Account </v-btn>
-              <v-btn text @click="logout"> Logout </v-btn>
+              <v-btn text v-if="this.$store.state.loggedIn === false" :to="{ name: 'Account' }"> Log in </v-btn>
+              <v-btn text v-else @click="logout"> Logout </v-btn>
             </v-card-actions>
           </v-card>
         </v-menu>
