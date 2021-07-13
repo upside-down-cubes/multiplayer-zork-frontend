@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "Start",
+  name: "CommandLine",
   data() {
     return {
       commandInput: "",
