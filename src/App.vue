@@ -17,9 +17,10 @@
         <v-spacer></v-spacer>
 
         <!--redirect to user login-->
+        <!--TODO: detect the user if no login, redirect to user login page-->
         <v-dialog transition="dialog-top-transition" max-width="345">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn v-blind="attrs" icon v-on="on">
+            <v-btn @click="redirectIfNoLogin" v-blind="attrs" icon v-on="on">
               <v-icon>mdi-account</v-icon>
             </v-btn>
           </template>
@@ -82,6 +83,7 @@
 <script>
 import Vue from "vue";
 import store from "./store";
+import router from "./router";
 
 export default {
   name: "App",
@@ -115,6 +117,11 @@ export default {
         this.contentAlert = "Fail to log out. Please try again";
       }
       this.alert = true;
+    },
+    redirectIfNoLogin() {
+      if (!this.$store.state.loggedIn) {
+        router.push({ name: "Login" });
+      }
     },
   },
 };
