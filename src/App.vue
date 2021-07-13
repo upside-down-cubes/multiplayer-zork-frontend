@@ -56,7 +56,13 @@
             </v-list-item>
 
             <v-card-actions justify="space-around">
-              <v-btn text v-if="this.$store.state.loggedIn === false" :to="{ name: 'Account' }"> Log in </v-btn>
+              <v-btn
+                text
+                v-if="this.$store.state.loggedIn === false"
+                :to="{ name: 'Login' }"
+              >
+                Log in
+              </v-btn>
               <v-btn text v-else @click="logout"> Logout </v-btn>
             </v-card-actions>
           </v-card>
@@ -74,15 +80,20 @@
 
     <v-main>
       <!--alert message-->
-      <v-alert
-        v-model="alert"
-        border="bottom"
-        :color="colorAlert"
-        elevation="2"
-        dismissible
-        type="info"
-        >{{ contentAlert }}
-      </v-alert>
+      <p></p>
+      <v-row>
+        <v-col offset="2" cols="10" sm="4" md="9">
+          <v-alert
+            v-model="alert"
+            border="bottom"
+            :color="colorAlert"
+            elevation="2"
+            dismissible
+            type="info"
+            >{{ contentAlert }}
+          </v-alert>
+        </v-col>
+      </v-row>
       <router-view></router-view>
     </v-main>
 
