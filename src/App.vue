@@ -67,14 +67,6 @@
             </v-card-actions>
           </v-card>
         </v-menu>
-
-        <!--redirect to user login-->
-        <!--        <v-btn :to="{ name: 'Login' }" icon>-->
-        <!--          <v-icon>mdi-account</v-icon>-->
-        <!--        </v-btn>-->
-        <!--        <v-btn @click="logout">-->
-        <!--          <v-icon>mdi-dots-vertical</v-icon>-->
-        <!--        </v-btn>-->
       </v-app-bar>
     </div>
 
