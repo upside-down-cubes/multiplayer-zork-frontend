@@ -1,11 +1,13 @@
 <template>
   <v-container>
+    <!--chat box-->
     <v-card
       class="overflow-y-auto mx-auto"
       height="400"
       outlined
       id="scroll-target"
     >
+      <!--list of entered commands-->
       <v-list dense clipped id="scroll-content">
         <v-slide-y-transition group>
           <v-list-item
@@ -22,6 +24,7 @@
         </v-slide-y-transition>
       </v-list>
     </v-card>
+    <!--user input box-->
     <v-card class="mx-auto" flat outlined>
       <v-card-actions>
         <v-text-field
@@ -33,14 +36,83 @@
           @keydown.enter="showCommand"
         >
         </v-text-field>
-
+        <!--send button-->
         <v-btn @click="showCommand">
-          <v-icon>mdi-comment-multiple</v-icon>
+          <v-icon>mdi-send</v-icon>
         </v-btn>
+        <!--command info button-->
+        <div>
+          <v-btn @click.stop="dialog = true" class="ml-1">
+            <v-icon>mdi-information</v-icon>
+          </v-btn>
+        </div>
+        <v-dialog
+          v-model="dialog"
+          transition="dialog-top-transition"
+          max-width="800"
+        >
+          <template v-slot:default="dialog">
+            <v-card class="mx-auto" max-width="800" outlined>
+              <v-card-title>
+                <v-img
+                  aspect-ratio="1"
+                  :src="require('../assets/zorklogo.png')"
+                  height="50"
+                  max-width="50"
+                  contain
+                />
+                <h2 class="font-weight-light">Command Instruction</h2>
+                <!--command search box-->
+                <v-col offset="1">
+                  <v-text-field
+                    v-model="searchCommand"
+                    @keydown.delete="searchList = []"
+                    @keydown.enter="search"
+                    label="Search here"
+                    prepend-icon="mdi-magnify"
+                  ></v-text-field>
+                </v-col>
+              </v-card-title>
+              <v-divider></v-divider>
+              <!--  command tables -->
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left"><h3>Name</h3></th>
+                      <th class="text-left"><h3>Description</h3></th>
+                    </tr>
+                  </thead>
+                  <tbody v-if="!searchEnable || searchCommand === ''">
+                    <tr v-for="item in commandList" :key="item.commandName">
+                      <td>
+                        {{ item.commandName }}
+                      </td>
+                      <td>
+                        {{ item.commandDescription }}
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody v-else>
+                    <tr v-for="item in searchList" :key="item.commandName">
+                      <td>
+                        {{ item.commandName }}
+                      </td>
+                      <td>
+                        {{ item.commandDescription }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+              <v-card-actions class="justify-end">
+                <v-btn text @click="dialog.value = false">Close</v-btn>
+              </v-card-actions>
+            </v-card>
+          </template>
+        </v-dialog>
       </v-card-actions>
     </v-card>
-    <br />
-    <br />
   </v-container>
 </template>
 
@@ -56,6 +128,47 @@ export default {
       elem: null,
       events: [],
       nonce: 0,
+      dialog: false,
+      searchEnable: false,
+      searchCommand: "",
+      commandList: [
+        {
+          commandName: "attack",
+          commandDescription: "attacking a monster without any weapon",
+        },
+        {
+          commandName: "attack with",
+          commandDescription: "attacking a monster with a weapon you have",
+        },
+        {
+          commandName: "exit",
+          commandDescription: "exit Zork game",
+        },
+        {
+          commandName: "go",
+          commandDescription:
+            "Traversing the map, usually followed by North, East, South, West",
+        },
+        {
+          commandName: "play",
+          commandDescription: "choosing a certain map to play",
+        },
+        {
+          commandName: "quit",
+          commandDescription: "leave the game into the menu mode",
+        },
+        {
+          commandName: "take",
+          commandDescription:
+            "collecting Items found in rooms, usually followed by the item name",
+        },
+        {
+          commandName: "use",
+          commandDescription:
+            "consuming an item in your inventory, usually followed by an item name",
+        },
+      ],
+      searchList: [],
     };
   },
 
@@ -94,6 +207,20 @@ export default {
 
       this.sendCommandLineProblem();
       this.commandInput = null;
+    },
+
+    search() {
+      this.searchCommand = this.searchCommand.trim();
+      this.searchList = [];
+      for (let i = 0; i < this.commandList.length; i++) {
+        if (
+          this.commandList[i].commandName.localeCompare(this.searchCommand) ===
+          0
+        ) {
+          this.searchList.push(this.commandList[i]);
+        }
+      }
+      this.searchEnable = true;
     },
   },
 };
