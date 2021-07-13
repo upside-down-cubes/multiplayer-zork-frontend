@@ -1,21 +1,5 @@
 <template>
   <v-container>
-    <!--    <div class="text-center">-->
-    <!--      <h1 class="font-weight-light">This is start page</h1>-->
-    <!--    </div>-->
-    <!--    <br />-->
-    <!--    <v-row>-->
-    <!--      <v-col offset="4" cols="12" sm="6" md="5">-->
-    <!--        <v-text-field-->
-    <!--          v-on:keyup.enter="sendCommandLineProblem"-->
-    <!--          v-model="commandInput"-->
-    <!--          label="Enter Command"-->
-    <!--          required-->
-    <!--        ></v-text-field>-->
-    <!--        <p class="font-weight-light">This is User Input: {{ commandInput }}</p>-->
-    <!--        <br />-->
-    <!--      </v-col>-->
-    <!--    </v-row>-->
     <v-dialog transition="dialog-top-transition" max-width="800">
       <template v-slot:activator="{ on, attrs }">
         <v-btn v-blind="attrs" icon v-on="on">
@@ -30,6 +14,13 @@
       <template v-slot:default="dialog">
         <v-card class="mx-auto" max-width="800" outlined>
           <v-card-title>
+            <v-img
+              aspect-ratio="1"
+              :src="require('../assets/zorklogo.png')"
+              height="50"
+              max-width="50"
+              contain
+            />
             <h2 class="font-weight-light">Command Instruction</h2>
           </v-card-title>
           <v-divider inset></v-divider>
