@@ -134,7 +134,7 @@ export default {
         console.log("clicked login button");
         console.log(result.data);
         if (result.data.success) {
-          await router.push({ name: "Account" });
+          await router.push({ name: "Home" });
         } else {
           console.log("fail");
           this.colorAlert = "red";

@@ -16,42 +16,43 @@
 
         <v-spacer></v-spacer>
 
-        <!--redirect to user login-->
-        <!--TODO: detect the user if no login, redirect to user login page-->
-        <v-dialog transition="dialog-top-transition" max-width="345">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn @click="redirectIfNoLogin" v-blind="attrs" icon v-on="on">
-              <v-icon>mdi-account</v-icon>
+        <v-menu bottom min-width="200px" open-on-hover offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn icon x-large v-on="on">
+              <v-avatar size="48">
+                <v-icon>mdi-account</v-icon>
+              </v-avatar>
             </v-btn>
           </template>
-          <template v-slot:default="dialog">
-            <v-card class="mx-auto" max-width="344" outlined>
-              <v-list-item three-line>
-                <v-list-item-content>
-                  <div class="text-overline mb-4">ACCOUNT</div>
-                  <v-list-item-title class="text-h5 mb-1">
-                    {{ userName }}
-                  </v-list-item-title>
-                  <v-list-item-subtitle>Status: Online</v-list-item-subtitle>
-                </v-list-item-content>
+          <v-card class="mx-auto" max-width="344" outlined>
+            <v-list-item three-line>
+              <v-list-item-content>
+                <div class="text-overline mb-4">USERNAME</div>
+                <v-list-item-title class="text-h5 mb-1">
+                  {{ this.$store.state.username }}
+                </v-list-item-title>
+                <v-list-item-subtitle>Status: Online</v-list-item-subtitle>
+              </v-list-item-content>
 
-                <v-list-item-avatar size="60" color="grey">
-                  <v-icon dark> mdi-account </v-icon>
-                </v-list-item-avatar>
-              </v-list-item>
+              <v-list-item-avatar size="60" color="grey">
+                <v-icon dark> mdi-account </v-icon>
+              </v-list-item-avatar>
+            </v-list-item>
 
-              <v-card-actions>
-                <v-btn text> Logout </v-btn>
-              </v-card-actions>
-              <v-card-actions class="justify-end">
-                <v-btn text @click="dialog.value = false">Close</v-btn>
-              </v-card-actions>
-            </v-card>
-          </template>
-        </v-dialog>
-        <v-btn @click="logout">
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
+            <v-card-actions justify="space-around">
+              <v-btn text :to="{ name: 'Account' }"> Account </v-btn>
+              <v-btn text @click="logout"> Logout </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-menu>
+
+        <!--redirect to user login-->
+        <!--        <v-btn :to="{ name: 'Login' }" icon>-->
+        <!--          <v-icon>mdi-account</v-icon>-->
+        <!--        </v-btn>-->
+        <!--        <v-btn @click="logout">-->
+        <!--          <v-icon>mdi-dots-vertical</v-icon>-->
+        <!--        </v-btn>-->
       </v-app-bar>
     </div>
 
@@ -84,11 +85,9 @@
 import Vue from "vue";
 import store from "./store";
 import router from "./router";
-
 export default {
   name: "App",
   data: () => ({
-    userName: store.state.username,
     contentAlert: "",
     colorAlert: "",
     alert: false,
@@ -110,7 +109,8 @@ export default {
         this.contentAlert =
           "You successfully log out as " + this.$store.state.username;
         await store.dispatch("clearUser", result.data);
-        console.log("done dispatch: username = " + this.$store.state.username);
+        console.log("done dispatch");
+        await router.push({ name: "Login" });
       } else {
         console.log("fail");
         this.colorAlert = "red";
@@ -118,10 +118,8 @@ export default {
       }
       this.alert = true;
     },
-    redirectIfNoLogin() {
-      if (!this.$store.state.loggedIn) {
-        router.push({ name: "Login" });
-      }
+    async isLoggedIn() {
+      return this.$store.state.loggedIn;
     },
   },
 };
