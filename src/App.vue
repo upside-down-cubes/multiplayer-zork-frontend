@@ -4,12 +4,14 @@
       <v-app-bar app dark color="#212121">
         <!--redirect to home-->
         <router-link :to="{ name: 'Home' }">
-          <v-img
-            :src="require('./assets/zorklogo.png')"
-            height="90"
-            width="70"
-            contain
-          />
+          <v-btn fab icon x-large class="mr-3">
+            <v-img
+              :src="require('./assets/zorklogo.png')"
+              height="90"
+              width="70"
+              contain
+            />
+          </v-btn>
         </router-link>
 
         <h1 class="white--text font-weight-light">Zork Game</h1>
