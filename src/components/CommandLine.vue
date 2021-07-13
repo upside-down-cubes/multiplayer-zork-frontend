@@ -69,12 +69,39 @@ export default {
       loading: false,
       commandList: [
         {
-          commandName: "go",
-          commandDescription: "test",
+          commandName: "attack",
+          commandDescription: "attacking a monster without any weapon",
+        },
+        {
+          commandName: "attack with (argument)",
+          commandDescription: "attacking a monster with a weapon you have",
         },
         {
           commandName: "exit",
-          commandDescription: "test2",
+          commandDescription: "exit Zork game",
+        },
+        {
+          commandName: "go (argument)",
+          commandDescription:
+            "Traversing the map, usually followed by North, East, South, West",
+        },
+        {
+          commandName: "play (argument)",
+          commandDescription: "choosing a certain map to play",
+        },
+        {
+          commandName: "quit",
+          commandDescription: "leave the game into the menu mode",
+        },
+        {
+          commandName: "take (argument)",
+          commandDescription:
+            "collecting Items found in rooms, usually followed by the item name",
+        },
+        {
+          commandName: "use (argument)",
+          commandDescription:
+            "consuming an item in your inventory, usually followed by an item name",
         },
       ],
     };
