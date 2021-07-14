@@ -14,9 +14,10 @@
     <div class="text-center">
       <h1 class="font-weight-light">Login Page</h1>
     </div>
+    <br />
     <!--login form-->
     <v-row>
-      <v-col offset="3" cols="10" sm="4" md="6">
+      <v-col offset="3" cols="12" sm="6" md="6" align-self="center">
         <v-form ref="form" v-model="valid" lazy-validation>
           <!--username field-->
           <v-text-field
@@ -65,7 +66,7 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6" md="6">
                       <v-text-field
                         v-model="username"
                         label="Username*"
@@ -75,7 +76,7 @@
                         clearable
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6" md="6">
                       <v-text-field
                         v-model="password"
                         label="Password*"
