@@ -24,6 +24,7 @@
             v-model="username"
             label="Enter Username"
             filled
+            @keydown.enter="sendUserInfo"
           ></v-text-field>
           <v-spacer></v-spacer>
           <!--password field-->
@@ -33,6 +34,7 @@
             type="password"
             label="Enter Password"
             filled
+            @keydown.enter="sendUserInfo"
           ></v-text-field>
         </v-form>
         <br />
