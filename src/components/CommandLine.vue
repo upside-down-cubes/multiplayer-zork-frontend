@@ -33,6 +33,7 @@
           flat
           label="Enter your command..."
           solo
+          clearable
           @keydown.enter="showCommand"
         >
         </v-text-field>
@@ -69,6 +70,7 @@
                     @keydown.delete="searchList = []"
                     @keydown.enter="search"
                     label="Search here"
+                    clearable
                     prepend-icon="mdi-magnify"
                   ></v-text-field>
                 </v-col>

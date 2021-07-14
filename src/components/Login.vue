@@ -24,6 +24,7 @@
             v-model="username"
             label="Enter Username"
             filled
+            clearable
             @keydown.enter="sendUserInfo"
           ></v-text-field>
           <v-spacer></v-spacer>
@@ -34,6 +35,7 @@
             type="password"
             label="Enter Password"
             filled
+            clearable
             @keydown.enter="sendUserInfo"
           ></v-text-field>
         </v-form>
@@ -68,6 +70,9 @@
                         v-model="username"
                         label="Username*"
                         required
+                        hint="cannot contains any special characters"
+                        persistent-hint
+                        clearable
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
@@ -76,6 +81,7 @@
                         label="Password*"
                         type="password"
                         required
+                        clearable
                       ></v-text-field>
                     </v-col>
                   </v-row>
