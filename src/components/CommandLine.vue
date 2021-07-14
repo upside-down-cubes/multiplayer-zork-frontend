@@ -18,7 +18,15 @@
           >
             <v-row justify="space-between">
               <v-col cols="7" v-text="event.text"></v-col>
-              <v-col class="text-right" cols="5" v-text="event.time"></v-col>
+              <v-chip v-if="event.from === 'out'" small color="blue"
+                >GAME</v-chip
+              >
+              <v-col
+                v-else-if="event.from === 'in'"
+                class="text-right"
+                cols="5"
+                v-text="event.time"
+              ></v-col>
             </v-row>
           </v-list-item>
         </v-slide-y-transition>
@@ -123,7 +131,9 @@ export default {
   name: "CommandLine",
   data() {
     return {
+      connection: null,
       commandInput: "",
+      commandOutput: "",
       loader: null,
       loading: false,
       card: null,
@@ -174,6 +184,26 @@ export default {
     };
   },
 
+  created() {
+    let self = this;
+    console.log("Starting connection to WebSocket Server");
+    self.connection = new WebSocket("ws://localhost:8080/api/commandline");
+
+    self.connection.onmessage = function (event) {
+      self.commandOutput = event.data;
+      self.addEvents(self.commandOutput, "out");
+    };
+
+    self.connection.onopen = function () {
+      console.log("Successfully connected to the echo websocket server...");
+    };
+  },
+
+  destroyed() {
+    let self = this;
+    self.connection.close();
+  },
+
   computed: {
     timeline() {
       return this.events.slice();
@@ -182,9 +212,24 @@ export default {
 
   methods: {
     async sendCommandLineProblem() {
-      // fill here to send data through websocket
-      console.log("actions from commandLine page (Press enter or button)");
-      this.commandInput = "";
+      this.connection.send(this.commandInput);
+    },
+
+    addEvents(event, from) {
+      const time = new Date().toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
+
+      this.events.push({
+        id: this.nonce++,
+        text: event,
+        time: time,
+        from: from,
+      });
+
+      this.scroll();
     },
 
     scroll() {
@@ -194,19 +239,7 @@ export default {
     },
 
     showCommand() {
-      const time = new Date().toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      });
-      this.events.push({
-        id: this.nonce++,
-        text: this.commandInput,
-        time: time,
-      });
-
-      this.scroll();
-
+      this.addEvents(this.commandInput, "in");
       this.sendCommandLineProblem();
       this.commandInput = null;
     },
