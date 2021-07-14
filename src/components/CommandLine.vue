@@ -2,30 +2,30 @@
   <v-container>
     <!--chat box-->
     <v-card
-        class="overflow-y-auto mx-auto"
-        height="400"
-        outlined
-        id="scroll-target"
+      class="overflow-y-auto mx-auto"
+      height="400"
+      outlined
+      id="scroll-target"
     >
       <!--list of entered commands-->
       <v-list dense clipped id="scroll-content">
         <v-slide-y-transition group>
           <v-list-item
-              v-for="event in timeline"
-              :key="event.id"
-              class="mb-4"
-              small
+            v-for="event in timeline"
+            :key="event.id"
+            class="mb-4"
+            small
           >
             <v-row justify="space-between">
               <v-col cols="7" v-text="event.text"></v-col>
               <v-chip v-if="event.from === 'out'" small color="blue"
-              >GAME</v-chip
+                >GAME</v-chip
               >
               <v-col
-                  v-else-if="event.from === 'in'"
-                  class="text-right"
-                  cols="5"
-                  v-text="event.time"
+                v-else-if="event.from === 'in'"
+                class="text-right"
+                cols="5"
+                v-text="event.time"
               ></v-col>
             </v-row>
           </v-list-item>
@@ -36,13 +36,13 @@
     <v-card class="mx-auto" flat outlined>
       <v-card-actions>
         <v-text-field
-            v-model="commandInput"
-            hide-details
-            flat
-            label="Enter your command..."
-            solo
-            clearable
-            @keydown.enter="showCommand"
+          v-model="commandInput"
+          hide-details
+          flat
+          label="Enter your command..."
+          solo
+          clearable
+          @keydown.enter="showCommand"
         >
         </v-text-field>
         <!--send button-->
@@ -56,30 +56,30 @@
           </v-btn>
         </div>
         <v-dialog
-            v-model="dialog"
-            transition="dialog-top-transition"
-            max-width="800"
+          v-model="dialog"
+          transition="dialog-top-transition"
+          max-width="800"
         >
           <template v-slot:default="dialog">
             <v-card class="mx-auto" max-width="800" outlined>
               <v-card-title>
                 <v-img
-                    aspect-ratio="1"
-                    :src="require('../assets/zorklogo.png')"
-                    height="50"
-                    max-width="50"
-                    contain
+                  aspect-ratio="1"
+                  :src="require('../assets/zorklogo.png')"
+                  height="50"
+                  max-width="50"
+                  contain
                 />
                 <h2 class="font-weight-light">Command Instruction</h2>
                 <!--command search box-->
                 <v-col offset="1">
                   <v-text-field
-                      v-model="searchCommand"
-                      @keydown.delete="searchList = []"
-                      @keydown.enter="search"
-                      label="Search here"
-                      clearable
-                      prepend-icon="mdi-magnify"
+                    v-model="searchCommand"
+                    @keydown.delete="searchList = []"
+                    @keydown.enter="search"
+                    label="Search here"
+                    clearable
+                    prepend-icon="mdi-magnify"
                   ></v-text-field>
                 </v-col>
               </v-card-title>
@@ -88,30 +88,30 @@
               <v-simple-table>
                 <template v-slot:default>
                   <thead>
-                  <tr>
-                    <th class="text-left"><h3>Name</h3></th>
-                    <th class="text-left"><h3>Description</h3></th>
-                  </tr>
+                    <tr>
+                      <th class="text-left"><h3>Name</h3></th>
+                      <th class="text-left"><h3>Description</h3></th>
+                    </tr>
                   </thead>
                   <tbody v-if="!searchEnable || searchCommand === ''">
-                  <tr v-for="item in commandList" :key="item.commandName">
-                    <td>
-                      {{ item.commandName }}
-                    </td>
-                    <td>
-                      {{ item.commandDescription }}
-                    </td>
-                  </tr>
+                    <tr v-for="item in commandList" :key="item.commandName">
+                      <td>
+                        {{ item.commandName }}
+                      </td>
+                      <td>
+                        {{ item.commandDescription }}
+                      </td>
+                    </tr>
                   </tbody>
                   <tbody v-else>
-                  <tr v-for="item in searchList" :key="item.commandName">
-                    <td>
-                      {{ item.commandName }}
-                    </td>
-                    <td>
-                      {{ item.commandDescription }}
-                    </td>
-                  </tr>
+                    <tr v-for="item in searchList" :key="item.commandName">
+                      <td>
+                        {{ item.commandName }}
+                      </td>
+                      <td>
+                        {{ item.commandDescription }}
+                      </td>
+                    </tr>
                   </tbody>
                 </template>
               </v-simple-table>
@@ -159,7 +159,7 @@ export default {
         {
           commandName: "go",
           commandDescription:
-              "Traversing the map, usually followed by North, East, South, West",
+            "Traversing the map, usually followed by North, East, South, West",
         },
         {
           commandName: "play",
@@ -172,12 +172,12 @@ export default {
         {
           commandName: "take",
           commandDescription:
-              "collecting Items found in rooms, usually followed by the item name",
+            "collecting Items found in rooms, usually followed by the item name",
         },
         {
           commandName: "use",
           commandDescription:
-              "consuming an item in your inventory, usually followed by an item name",
+            "consuming an item in your inventory, usually followed by an item name",
         },
       ],
       searchList: [],
