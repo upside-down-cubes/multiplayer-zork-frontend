@@ -1,5 +1,18 @@
 <template>
   <v-container>
+    <!--chatroom prompt-->
+    <v-dialog v-model="chatroom" persistent max-width="290">
+      <v-card>
+        <v-card-title>Select your game room</v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text outlined @click="joinRoom(1)"> 1 </v-btn>
+          <v-btn text outlined @click="joinRoom(2)"> 2 </v-btn>
+          <v-btn text outlined @click="joinRoom(3)"> 3 </v-btn>
+          <v-btn text outlined @click="joinRoom(4)"> 4 </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <!--chat box-->
     <v-card
       class="overflow-y-auto mx-auto"
@@ -134,13 +147,15 @@ export default {
       connection: null,
       commandInput: "",
       commandOutput: "",
-      loader: null,
-      loading: false,
+
       card: null,
       elem: null,
       events: [],
       nonce: 0,
+
+      chatroom: true,
       dialog: false,
+
       searchEnable: false,
       searchCommand: "",
       commandList: [
@@ -213,6 +228,11 @@ export default {
   methods: {
     async sendCommandLineProblem() {
       this.connection.send(this.commandInput);
+    },
+
+    joinRoom(name) {
+      this.connection.send(this.$store.state.username + ":" + name);
+      this.chatroom = false;
     },
 
     addEvents(event, from) {
