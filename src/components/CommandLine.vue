@@ -123,7 +123,9 @@ export default {
   name: "CommandLine",
   data() {
     return {
+      connection: null,
       commandInput: "",
+      commandOutput: "",
       loader: null,
       loading: false,
       card: null,
@@ -181,10 +183,14 @@ export default {
   },
 
   methods: {
-    async sendCommandLineProblem() {
+    sendMessage: function (message) {
+      this.connection.send(message);
+    },
+
+    sendCommandLineProblem() {
       // fill here to send data through websocket
-      console.log("actions from commandLine page (Press enter or button)");
-      this.commandInput = "";
+      // console.log("Command sent to WebSocket... " + this);
+      this.sendMessage(this.commandInput);
     },
 
     scroll() {
@@ -208,6 +214,15 @@ export default {
       this.scroll();
 
       this.sendCommandLineProblem();
+      // console.log("Command Output " + this.commandOutput);
+
+      this.events.push({
+        id: this.nonce++,
+        text: this.commandOutput,
+        time: time,
+      });
+      this.scroll();
+
       this.commandInput = null;
     },
 
@@ -224,6 +239,21 @@ export default {
       }
       this.searchEnable = true;
     },
+  },
+  created: function () {
+    console.log("Starting connection to WebSocket Server");
+    this.connection = new WebSocket("ws://localhost:8080/api/commandline");
+
+    this.connection.onmessage = function (event) {
+      console.log("Event: ");
+      console.log(event.data);
+      this.commandOutput = event.data;
+    };
+
+    this.connection.onopen = function (event) {
+      console.log(event);
+      console.log("Successfully connection to the echo websocket server...");
+    };
   },
 };
 </script>
