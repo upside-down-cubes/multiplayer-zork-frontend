@@ -178,7 +178,6 @@
 </template>
 
 <script>
-
 export default {
   name: "CommandLine",
   data() {
@@ -187,7 +186,6 @@ export default {
       MaxHP: "",
       ATK: "",
       RoomDes: "",
-      // contentDes: "NULL",
       connection: null,
       commandInput: "",
       commandOutput: "",
@@ -243,8 +241,6 @@ export default {
       self.HP = result.hp;
       self.MaxHP = result.maxHp;
       self.ATK = result.attack;
-      console.log(self.connection);
-      // capacity
       self.RoomDes = result.roomDescription;
       // ================================================================
       self.addEvents(self.commandOutput, "out");
@@ -261,7 +257,10 @@ export default {
   },
   methods: {
     async sendCommandLineProblem() {
-      if (this.commandInput.localeCompare("/quit") !== 0) {
+      if (
+        !this.commandInput.trim().includes("/quit") &&
+        !this.commandInput.trim().includes("/exit")
+      ) {
         this.connection.send(this.commandInput);
       } else {
         this.addEvents("Click the exit button on the right", "out");
