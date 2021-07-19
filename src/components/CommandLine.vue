@@ -143,22 +143,25 @@
       </v-col>
       <!-- user info panel -->
       <v-col>
-        <v-card class="mx-auto" max-height="470" max-width="374" flat outlined>
-          <v-card-title class="justify-start">
-            <h2 class="font-weight-light justify-center">Player Information</h2>
+        <v-card class="mx-auto" max-height="480" max-width="380" flat outlined>
+          <v-card-title class="justify-center">
+            <h2 class="font-weight-light justify-center">Player Info</h2>
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text align="center">
-            <v-avatar color="secondary" size="60">
-              <span class="white--text text-h5">DK</span>
+            <v-avatar color="primary" size="60">
+              <v-icon dark>mdi-account</v-icon>
             </v-avatar>
           </v-card-text>
           <v-card-text align="start">
-            <h3 class="font-weight-medium">HP:</h3>
+            <h3 class="font-weight-medium">HP: {{ HP }} / {{ MaxHP }}</h3>
             <br />
-            <h3 class="font-weight-medium">ATK:</h3>
+            <h3 class="font-weight-medium">ATK: {{ ATK }}</h3>
             <br />
-            <h3 class="font-weight-medium">Room Description:</h3>
+            <h3 class="font-weight-medium">
+              Room Description: <br />
+              {{ RoomDes }}
+            </h3>
             <br />
             <h3 class="font-weight-medium">Inventory:</h3>
           </v-card-text>
@@ -185,6 +188,7 @@ export default {
       MaxHP: "",
       ATK: "",
       RoomDes: "",
+      // contentDes: "NULL",
       connection: null,
       commandInput: "",
       commandOutput: "",
@@ -242,8 +246,16 @@ export default {
     console.log("Starting connection to WebSocket Server");
     self.connection = new WebSocket("ws://localhost:8080/api/commandline");
     self.connection.onmessage = function (event) {
-      self.commandOutput = event.data;
-      console.log(event.data);
+      const result = JSON.parse(event.data);
+      // ================================================================
+      self.commandOutput = result.content;
+      self.HP = result.hp;
+      self.MaxHP = result.maxHp;
+      self.ATK = result.attack;
+      // capacity
+      console.log(result);
+      self.RoomDes = result.roomDescription;
+      // ================================================================
       self.addEvents(self.commandOutput, "out");
     };
     self.connection.onopen = function () {
