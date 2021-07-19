@@ -158,6 +158,8 @@
             <br />
             <h3 class="font-weight-medium">ATK:</h3>
             <br />
+            <h3 class="font-weight-medium">Room Description:</h3>
+            <br />
             <h3 class="font-weight-medium">Inventory:</h3>
           </v-card-text>
           <v-card-actions>
@@ -179,6 +181,10 @@ export default {
   name: "CommandLine",
   data() {
     return {
+      HP: "",
+      MaxHP: "",
+      ATK: "",
+      RoomDes: "",
       connection: null,
       commandInput: "",
       commandOutput: "",
