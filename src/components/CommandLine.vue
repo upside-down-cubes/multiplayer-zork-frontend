@@ -34,7 +34,7 @@
                 small
               >
                 <v-row justify="space-between">
-                  <v-col cols="7" v-text="event.text"></v-col>
+                  <v-col cols="7" v-html="event.text"></v-col>
                   <v-chip v-if="event.from === 'out'" small color="blue"
                     >GAME</v-chip
                   >
@@ -160,7 +160,7 @@
             <br />
             <h3 class="font-weight-medium">
               Room Description: <br />
-              {{ RoomDes }}
+              <span v-html="RoomDes"></span>
             </h3>
             <br />
           </v-card-text>
@@ -236,12 +236,13 @@ export default {
     self.connection = new WebSocket("ws://localhost:8080/api/commandline");
     self.connection.onmessage = function (event) {
       const result = JSON.parse(event.data);
+      console.log(result);
       // ================================================================
-      self.commandOutput = result.content;
+      self.commandOutput = result.content.replaceAll("\n", "<br/>");
       self.HP = result.hp;
       self.MaxHP = result.maxHp;
       self.ATK = result.attack;
-      self.RoomDes = result.roomDescription;
+      self.RoomDes = result.roomDescription.replaceAll("\n", "<br/>");
       // ================================================================
       self.addEvents(self.commandOutput, "out");
     };
