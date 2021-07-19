@@ -143,7 +143,7 @@
       </v-col>
       <!-- user info panel -->
       <v-col>
-        <v-card class="mx-auto" max-height="480" max-width="380" flat outlined>
+        <v-card class="mx-auto" max-width="380" flat outlined>
           <v-card-title class="justify-center">
             <h2 class="font-weight-light justify-center">Player Info</h2>
           </v-card-title>
@@ -163,14 +163,12 @@
               {{ RoomDes }}
             </h3>
             <br />
-            <h3 class="font-weight-medium">Inventory:</h3>
           </v-card-text>
           <v-card-actions>
-            <v-col>
-              <v-btn>Quit</v-btn>
-            </v-col>
             <v-col align="end">
-              <v-btn>Exit</v-btn>
+              <router-link :to="{ name: 'Home' }">
+                <v-btn>Exit</v-btn>
+              </router-link>
             </v-col>
           </v-card-actions>
         </v-card>
@@ -180,6 +178,7 @@
 </template>
 
 <script>
+
 export default {
   name: "CommandLine",
   data() {
@@ -211,10 +210,6 @@ export default {
           commandDescription: "attacking a monster with a weapon you have",
         },
         {
-          commandName: "exit",
-          commandDescription: "exit Zork game",
-        },
-        {
           commandName: "go",
           commandDescription:
             "Traversing the map, usually followed by North, East, South, West",
@@ -222,10 +217,6 @@ export default {
         {
           commandName: "play",
           commandDescription: "choosing a certain map to play",
-        },
-        {
-          commandName: "quit",
-          commandDescription: "leave the game into the menu mode",
         },
         {
           commandName: "take",
@@ -252,14 +243,11 @@ export default {
       self.HP = result.hp;
       self.MaxHP = result.maxHp;
       self.ATK = result.attack;
+      console.log(self.connection);
       // capacity
-      console.log(result);
       self.RoomDes = result.roomDescription;
       // ================================================================
       self.addEvents(self.commandOutput, "out");
-    };
-    self.connection.onopen = function () {
-      console.log("Successfully connected to the echo websocket server...");
     };
   },
   destroyed() {
@@ -270,13 +258,14 @@ export default {
     timeline() {
       return this.events.slice();
     },
-    // userInfo() {
-    //   // TODO: this is for user info right panel
-    // }
   },
   methods: {
     async sendCommandLineProblem() {
-      this.connection.send(this.commandInput);
+      if (this.commandInput.localeCompare("/quit") !== 0) {
+        this.connection.send(this.commandInput);
+      } else {
+        this.addEvents("Click the exit button on the right", "out");
+      }
     },
     joinRoom(name) {
       this.connection.send(this.$store.state.username + ":" + name);
