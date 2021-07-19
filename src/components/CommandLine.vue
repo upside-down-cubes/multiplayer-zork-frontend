@@ -237,6 +237,7 @@ export default {
     self.connection = new WebSocket("ws://localhost:8080/api/commandline");
     self.connection.onmessage = function (event) {
       self.commandOutput = event.data;
+      console.log(event.data);
       self.addEvents(self.commandOutput, "out");
     };
     self.connection.onopen = function () {
