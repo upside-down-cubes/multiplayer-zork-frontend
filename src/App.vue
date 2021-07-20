@@ -91,7 +91,7 @@
       <router-view></router-view>
     </v-main>
 
-    <v-footer fixed>
+    <v-footer fixed app>
       <v-switch
         v-model="$vuetify.theme.dark"
         style="color: white"

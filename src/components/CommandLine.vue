@@ -52,22 +52,54 @@
         <!--user input box-->
         <v-card class="mx-auto" flat outlined>
           <v-card-actions>
-            <!--command mode button-->
-            <v-btn
-              v-if="isCommandMode"
-              color="#E57373"
-              @click="isCommandMode = false"
-            >
-              <v-icon>mdi-google-controller</v-icon>
-            </v-btn>
-            <v-btn v-else color="#9CCC65" @click="isCommandMode = true">
-              <v-icon>mdi-google-controller-off</v-icon>
-            </v-btn>
+            <!--switch to chat mode button-->
+            <v-tooltip bottom v-if="isCommandMode">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="#E57373"
+                  @click="isCommandMode = false"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-google-controller</v-icon>
+                </v-btn>
+              </template>
+              <span>Switch to chat mode</span>
+            </v-tooltip>
+            <!--switch to command mode button-->
+            <v-tooltip bottom v-else>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="#9CCC65"
+                  @click="isCommandMode = true"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-google-controller-off</v-icon>
+                </v-btn>
+              </template>
+              <span>Switch to command mode </span>
+            </v-tooltip>
+
+            <!--text label for command mode-->
             <v-text-field
               v-model="commandInput"
+              v-if="isCommandMode"
               hide-details
               flat
               label="Enter your command..."
+              solo
+              clearable
+              @keydown.enter="showCommand"
+            >
+            </v-text-field>
+            <!-- text label for chat mode-->
+            <v-text-field
+              v-model="commandInput"
+              v-else
+              hide-details
+              flat
+              label="Enter your message..."
               solo
               clearable
               @keydown.enter="showCommand"
