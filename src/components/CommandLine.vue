@@ -208,6 +208,67 @@
             <br />
           </v-card-text>
           <v-card-actions>
+            <v-btn @click="dialog_user_list = true">
+              <v-icon>mdi-account-group</v-icon>
+            </v-btn>
+            <!-- User online list-->
+            <v-dialog
+              v-model="dialog_user_list"
+              transition="dialog-top-transition"
+              max-width="800"
+            >
+              <template v-slot:default="dialog_user_list">
+                <v-card class="mx-auto" max-width="800" outlined>
+                  <v-card-title>
+                    <v-img
+                      aspect-ratio="1"
+                      :src="require('../assets/zorklogo.png')"
+                      height="50"
+                      max-width="50"
+                      contain
+                    />
+                    <h2 class="font-weight-light">Online User</h2>
+                  </v-card-title>
+                  <v-divider></v-divider>
+                  <!--  command tables -->
+                  <v-simple-table>
+                    <template v-slot:default>
+                      <thead>
+                        <tr>
+                          <th class="text-left"><h3>Name</h3></th>
+                          <th class="text-left"><h3>Description</h3></th>
+                        </tr>
+                      </thead>
+                      <tbody v-if="!searchEnable || searchCommand === ''">
+                        <tr v-for="item in commandList" :key="item.commandName">
+                          <td>
+                            {{ item.commandName }}
+                          </td>
+                          <td>
+                            {{ item.commandDescription }}
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody v-else>
+                        <tr v-for="item in searchList" :key="item.commandName">
+                          <td>
+                            {{ item.commandName }}
+                          </td>
+                          <td>
+                            {{ item.commandDescription }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </template>
+                  </v-simple-table>
+                  <v-card-actions class="justify-end">
+                    <v-btn text @click="dialog_user_list.value = false"
+                      >Close</v-btn
+                    >
+                  </v-card-actions>
+                </v-card>
+              </template>
+            </v-dialog>
             <v-col align="end">
               <router-link :to="{ name: 'Home' }">
                 <v-btn>Exit</v-btn>
@@ -239,6 +300,7 @@ export default {
       nonce: 0,
       chatroom: true,
       dialog: false,
+      dialog_user_list: false,
       searchEnable: false,
       isCommandMode: false,
       searchCommand: "",
