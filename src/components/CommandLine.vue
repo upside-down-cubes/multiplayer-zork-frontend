@@ -371,6 +371,7 @@ export default {
   },
   destroyed() {
     let self = this;
+    self.connection.send("/quit");
     self.connection.close();
   },
   computed: {
