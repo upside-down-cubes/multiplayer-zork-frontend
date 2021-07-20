@@ -230,10 +230,10 @@
             <v-dialog
               v-model="dialog_user_list"
               transition="dialog-top-transition"
-              max-width="800"
+              max-width="400"
             >
               <template v-slot:default="dialog_user_list">
-                <v-card class="mx-auto" max-width="800" outlined>
+                <v-card class="mx-auto" max-width="400" outlined>
                   <v-card-title>
                     <v-img
                       aspect-ratio="1"
@@ -242,7 +242,7 @@
                       max-width="50"
                       contain
                     />
-                    <h2 class="font-weight-light">Online User</h2>
+                    <h2 class="font-weight-light">Users in this Session</h2>
                   </v-card-title>
                   <v-divider></v-divider>
                   <!--  command tables -->
@@ -250,27 +250,14 @@
                     <template v-slot:default>
                       <thead>
                         <tr>
-                          <th class="text-left"><h3>Name</h3></th>
-                          <th class="text-left"><h3>Description</h3></th>
+                          <th class="text-center"><h3>Name</h3></th>
                         </tr>
                       </thead>
-                      <tbody v-if="!searchEnable || searchCommand === ''">
-                        <tr v-for="item in commandList" :key="item.commandName">
-                          <td>
-                            {{ item.commandName }}
-                          </td>
-                          <td>
-                            {{ item.commandDescription }}
-                          </td>
-                        </tr>
-                      </tbody>
-                      <tbody v-else>
-                        <tr v-for="item in searchList" :key="item.commandName">
-                          <td>
-                            {{ item.commandName }}
-                          </td>
-                          <td>
-                            {{ item.commandDescription }}
+                      <tbody>
+                        <tr v-for="user in userList" :key="user">
+                          <td class="text-center">
+                            {{ user }}
+                            <v-chip x-small color="#9CCC65">online</v-chip>
                           </td>
                         </tr>
                       </tbody>
@@ -317,6 +304,7 @@ export default {
       chatroom: true,
       dialog: false,
       dialog_user_list: false,
+      userList: [],
       searchEnable: false,
       isCommandMode: false,
       searchCommand: "",
@@ -372,7 +360,7 @@ export default {
       // ================================================================
       self.commandOutput = result.content.replaceAll("\n", "<br/>");
       self.type = result.type;
-      console.log(self.type);
+      self.userList = result.otherUsers;
       self.HP = result.hp;
       self.MaxHP = result.maxHp;
       self.ATK = result.attack;
@@ -406,6 +394,7 @@ export default {
           if (!this.isCommandMode) {
             this.connection.send(this.commandInput);
           } else {
+            this.type = -1;
             this.addEvents("Click the exit button on the right", "out");
           }
         }
@@ -421,13 +410,15 @@ export default {
         minute: "2-digit",
         hour12: true,
       });
-      this.events.push({
-        id: this.nonce++,
-        text: event,
-        time: time,
-        from: from,
-        type: this.type,
-      });
+      if (!(from === "in" && !this.isCommandMode)) {
+        this.events.push({
+          id: this.nonce++,
+          text: event,
+          time: time,
+          from: from,
+          type: this.type,
+        });
+      }
       this.scroll();
     },
     scroll() {
