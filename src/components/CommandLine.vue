@@ -38,13 +38,13 @@
                   <v-chip
                     v-if="event.from === 'out' && event.type === -1"
                     small
-                    color="blue"
+                    color="#E57373"
                     >SYSTEM</v-chip
                   >
                   <v-chip
                     v-else-if="event.from === 'out' && event.type === 0"
                     small
-                    color="#E57373"
+                    color="blue"
                     >GAME</v-chip
                   >
                   <v-chip
@@ -71,7 +71,7 @@
             <v-tooltip bottom v-if="isCommandMode">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  color="#E57373"
+                  color="blue"
                   @click="isCommandMode = false"
                   v-bind="attrs"
                   v-on="on"
