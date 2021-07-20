@@ -244,31 +244,41 @@ export default {
       searchCommand: "",
       commandList: [
         {
+          commandName: "info",
+          commandDescription:
+            "Displaying information about the room and your inventory",
+        },
+        {
           commandName: "attack",
-          commandDescription: "attacking a monster without any weapon",
+          commandDescription: "Performing a basic attack (without any weapon)",
         },
         {
-          commandName: "attack with",
-          commandDescription: "attacking a monster with a weapon you have",
-        },
-        {
-          commandName: "go",
+          commandName: "attack with [weapon]",
           commandDescription:
-            "Traversing the map, usually followed by North, East, South, West",
+            "Performing an attack with a weapon you own (some items can't be used for attacking)",
         },
         {
-          commandName: "play",
-          commandDescription: "choosing a certain map to play",
-        },
-        {
-          commandName: "take",
+          commandName: "go [direction]",
           commandDescription:
-            "collecting Items found in rooms, usually followed by the item name",
+            "Moving between rooms in a certain direction (available direction North, East, South, West)",
         },
         {
-          commandName: "use",
+          commandName: "play [map name]",
+          commandDescription: "Selecting a map for that chat session.",
+        },
+        {
+          commandName: "take [item in the room]",
+          commandDescription: "Taking an item from the room",
+        },
+        {
+          commandName: "use [item in your bag]",
           commandDescription:
-            "consuming an item in your inventory, usually followed by an item name",
+            "Using an item from your inventory (some items can't be consumed)",
+        },
+        {
+          commandName: "use [item in your bag] on [player name]",
+          commandDescription:
+            "Using an item you own on another person (some items can't be used on another player)",
         },
       ],
       searchList: [],
