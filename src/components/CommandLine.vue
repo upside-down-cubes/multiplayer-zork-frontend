@@ -314,8 +314,8 @@ export default {
     async sendCommandLineProblem() {
       if (this.commandInput.localeCompare("") !== 0) {
         if (
-          !this.commandInput.trim().includes("/quit") &&
-          !this.commandInput.trim().includes("/exit")
+          !this.commandInput.trim().includes("quit") &&
+          !this.commandInput.trim().includes("exit")
         ) {
           if (this.isCommandMode) {
             this.connection.send("/".concat(this.commandInput));
@@ -323,7 +323,11 @@ export default {
             this.connection.send(this.commandInput);
           }
         } else {
-          this.addEvents("Click the exit button on the right", "out");
+          if (!this.isCommandMode) {
+            this.connection.send(this.commandInput);
+          } else {
+            this.addEvents("Click the exit button on the right", "out");
+          }
         }
       }
     },
