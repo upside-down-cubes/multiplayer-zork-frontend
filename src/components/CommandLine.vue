@@ -53,8 +53,15 @@
         <v-card class="mx-auto" flat outlined>
           <v-card-actions>
             <!--command mode button-->
-            <v-btn>
-              Command Mode
+            <v-btn
+              v-if="!isCommandMode"
+              color="#B71C1C"
+              @click="isCommandMode = true"
+            >
+              <span class="white--text"> Command Mode </span>
+            </v-btn>
+            <v-btn v-else color="#9CCC65" @click="isCommandMode = false">
+              <span class="white--text"> Chat Mode </span>
             </v-btn>
             <v-text-field
               v-model="commandInput"
@@ -201,6 +208,7 @@ export default {
       chatroom: true,
       dialog: false,
       searchEnable: false,
+      isCommandMode: false,
       searchCommand: "",
       commandList: [
         {
@@ -262,13 +270,19 @@ export default {
   },
   methods: {
     async sendCommandLineProblem() {
-      if (
-        !this.commandInput.trim().includes("/quit") &&
-        !this.commandInput.trim().includes("/exit")
-      ) {
-        this.connection.send(this.commandInput);
-      } else {
-        this.addEvents("Click the exit button on the right", "out");
+      if (this.commandInput.localeCompare("") !== 0) {
+        if (
+          !this.commandInput.trim().includes("/quit") &&
+          !this.commandInput.trim().includes("/exit")
+        ) {
+          if (this.isCommandMode) {
+            this.connection.send("/".concat(this.commandInput));
+          } else {
+            this.connection.send(this.commandInput);
+          }
+        } else {
+          this.addEvents("Click the exit button on the right", "out");
+        }
       }
     },
     joinRoom(name) {
@@ -295,9 +309,18 @@ export default {
       this.card.scrollTop = this.elem.offsetHeight;
     },
     showCommand() {
-      this.addEvents(this.commandInput, "in");
-      this.sendCommandLineProblem();
-      this.commandInput = null;
+      if (
+        this.commandInput !== null &&
+        this.commandInput.localeCompare("") !== 0
+      ) {
+        if (this.commandInput.trim().localeCompare("") !== 0) {
+          this.addEvents(this.commandInput, "in");
+          this.sendCommandLineProblem();
+          this.commandInput = null;
+        } else {
+          this.commandInput = null;
+        }
+      }
     },
     search() {
       this.searchCommand = this.searchCommand.trim();
