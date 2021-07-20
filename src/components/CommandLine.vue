@@ -52,6 +52,10 @@
         <!--user input box-->
         <v-card class="mx-auto" flat outlined>
           <v-card-actions>
+            <!--command mode button-->
+            <v-btn>
+              Command Mode
+            </v-btn>
             <v-text-field
               v-model="commandInput"
               hide-details
