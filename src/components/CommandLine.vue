@@ -54,14 +54,14 @@
           <v-card-actions>
             <!--command mode button-->
             <v-btn
-              v-if="!isCommandMode"
-              color="#B71C1C"
-              @click="isCommandMode = true"
+              v-if="isCommandMode"
+              color="#E57373"
+              @click="isCommandMode = false"
             >
-              <span class="white--text"> Command Mode </span>
+              <v-icon>mdi-google-controller</v-icon>
             </v-btn>
-            <v-btn v-else color="#9CCC65" @click="isCommandMode = false">
-              <span class="white--text"> Chat Mode </span>
+            <v-btn v-else color="#9CCC65" @click="isCommandMode = true">
+              <v-icon>mdi-google-controller-off</v-icon>
             </v-btn>
             <v-text-field
               v-model="commandInput"
