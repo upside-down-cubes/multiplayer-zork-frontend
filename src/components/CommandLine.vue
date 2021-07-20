@@ -35,8 +35,23 @@
               >
                 <v-row justify="space-between">
                   <v-col cols="7" v-html="event.text"></v-col>
-                  <v-chip v-if="event.from === 'out'" small color="blue"
+                  <v-chip
+                    v-if="event.from === 'out' && event.type === -1"
+                    small
+                    color="blue"
+                    >SYSTEM</v-chip
+                  >
+                  <v-chip
+                    v-else-if="event.from === 'out' && event.type === 0"
+                    small
+                    color="#E57373"
                     >GAME</v-chip
+                  >
+                  <v-chip
+                    v-else-if="event.from === 'out' && event.type === 1"
+                    small
+                    color="#9CCC65"
+                    >CHAT</v-chip
                   >
                   <v-col
                     v-else-if="event.from === 'in'"
@@ -293,6 +308,7 @@ export default {
       connection: null,
       commandInput: "",
       commandOutput: "",
+      type: null,
       userInfo: "",
       card: null,
       elem: null,
@@ -355,6 +371,8 @@ export default {
       console.log(result);
       // ================================================================
       self.commandOutput = result.content.replaceAll("\n", "<br/>");
+      self.type = result.type;
+      console.log(self.type);
       self.HP = result.hp;
       self.MaxHP = result.maxHp;
       self.ATK = result.attack;
@@ -408,6 +426,7 @@ export default {
         text: event,
         time: time,
         from: from,
+        type: this.type,
       });
       this.scroll();
     },
