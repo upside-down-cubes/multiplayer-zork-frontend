@@ -4,7 +4,6 @@ import VueRouter from "vue-router";
 import Login from "@/components/Login";
 import Home from "@/components/Home";
 import store from "@/store";
-import Account from "@/components/Account";
 import CommandLine from "@/components/CommandLine";
 
 Vue.use(VueRouter);
@@ -19,11 +18,6 @@ const routes = [
     name: "Home",
     path: "/home",
     component: Home,
-  },
-  {
-    name: "Account",
-    path: "/account",
-    component: Account,
   },
   {
     name: "CommandLine",
