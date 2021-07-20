@@ -356,12 +356,12 @@ export default {
     },
     search() {
       this.searchCommand = this.searchCommand.trim();
+      if (this.searchCommand.localeCompare("") !== 0) {
+        this.searchCommand = this.searchCommand.toLocaleLowerCase();
+      }
       this.searchList = [];
       for (let i = 0; i < this.commandList.length; i++) {
-        if (
-          this.commandList[i].commandName.localeCompare(this.searchCommand) ===
-          0
-        ) {
+        if (this.commandList[i].commandName.startsWith(this.searchCommand)) {
           this.searchList.push(this.commandList[i]);
         }
       }
