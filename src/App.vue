@@ -14,7 +14,7 @@
           </v-btn>
         </router-link>
 
-        <h1 class="white--text font-weight-light">Zork Game</h1>
+        <h1 class="white--text font-weight-light">MultZork</h1>
 
         <v-spacer></v-spacer>
 
