@@ -128,6 +128,14 @@ export default {
     form: false,
   }),
 
+  watch: {
+    alert: function () {
+      setTimeout(() => {
+        this.alert = false;
+      }, 3000);
+    },
+  },
+
   methods: {
     async sendUserInfo() {
       this.loading = true;

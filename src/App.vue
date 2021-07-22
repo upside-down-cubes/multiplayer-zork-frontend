@@ -120,6 +120,13 @@ export default {
   created() {
     document.title = "Mult / Zork";
   },
+  watch: {
+    alert: function () {
+      setTimeout(() => {
+        this.alert = false;
+      }, 3000);
+    },
+  },
   methods: {
     async logout() {
       // send request to logout via get method
