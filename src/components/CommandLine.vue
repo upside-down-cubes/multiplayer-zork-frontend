@@ -393,7 +393,7 @@ export default {
       self.MaxCap = result.capacity;
       self.Current = result.currentLoad;
       self.commandOutput = result.content.replaceAll("\n", "<br/>");
-      self.mapName = result.mapName;
+      self.mapName = result.mapName.replaceAll("_", " ");
       self.type = result.type;
       self.EXP = result.exp;
       self.MaxExp = result.maxExp;
