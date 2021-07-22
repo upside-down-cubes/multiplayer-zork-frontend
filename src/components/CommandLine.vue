@@ -203,7 +203,7 @@
       <v-col>
         <v-card class="mx-auto" max-width="380" flat outlined>
           <v-card-title class="justify-center">
-            <h2 class="font-weight-light justify-center">Player Info</h2>
+            <h3 class="font-weight-bold justify-center">Player Info</h3>
           </v-card-title>
           <v-divider></v-divider>
           <v-card-text align="center">
@@ -213,6 +213,8 @@
           </v-card-text>
           <v-card-text align="start">
             <h3 class="font-weight-medium">HP: {{ HP }} / {{ MaxHP }}</h3>
+            <br />
+            <h3 class="font-weight-medium">EXP: {{ EXP }} / {{ MaxExp }}</h3>
             <br />
             <h3 class="font-weight-medium">ATK: {{ ATK }}</h3>
             <br />
@@ -289,6 +291,8 @@ export default {
   data() {
     return {
       HP: "",
+      EXP: "",
+      MaxExp: "",
       MaxHP: "",
       ATK: "",
       RoomDes: "",
@@ -360,6 +364,8 @@ export default {
       // ================================================================
       self.commandOutput = result.content.replaceAll("\n", "<br/>");
       self.type = result.type;
+      self.EXP = result.exp;
+      self.MaxExp = result.maxExp;
       self.userList = result.otherUsers;
       self.HP = result.hp;
       self.MaxHP = result.maxHp;
