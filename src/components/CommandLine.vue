@@ -218,6 +218,8 @@
             <br />
             <h3 class="font-weight-medium">ATK: {{ ATK }}</h3>
             <br />
+            <h3 class="font-weight-medium">Map Name: {{ mapName }}</h3>
+            <br />
             <h3 class="font-weight-medium">
               Room Description: <br />
               <span v-html="RoomDes"></span>
@@ -291,6 +293,7 @@ export default {
   data() {
     return {
       HP: "",
+      mapName: "",
       EXP: "",
       MaxExp: "",
       MaxHP: "",
@@ -362,6 +365,7 @@ export default {
       const result = JSON.parse(event.data);
       // ================================================================
       self.commandOutput = result.content.replaceAll("\n", "<br/>");
+      self.mapName = result.mapName;
       self.type = result.type;
       self.EXP = result.exp;
       self.MaxExp = result.maxExp;

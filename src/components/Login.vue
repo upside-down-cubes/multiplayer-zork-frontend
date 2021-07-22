@@ -137,11 +137,6 @@ export default {
         formData.append("password", this.password);
         // send username, password to api/login via post method
         let result = await Vue.axios.post("/api/login", formData);
-        // result will be
-        // { success: boolean,
-        // message: String }
-        console.log("clicked login button");
-        console.log(result.data);
         if (result.data.success) {
           await router.push({ name: "Home" });
         } else {
