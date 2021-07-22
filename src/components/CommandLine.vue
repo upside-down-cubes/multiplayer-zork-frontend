@@ -212,11 +212,35 @@
             </v-avatar>
           </v-card-text>
           <v-card-text align="start">
-            <h3 class="font-weight-medium">HP: {{ HP }} / {{ MaxHP }}</h3>
+            <h3 class="font-weight-medium" align="center">ATK: {{ ATK }}</h3>
             <br />
-            <h3 class="font-weight-medium">EXP: {{ EXP }} / {{ MaxExp }}</h3>
+            <v-progress-linear
+              color="red"
+              height="18"
+              absolute
+              :value="(this.HP * 100) / this.MaxHP"
+            >
+              <strong>HP: {{ HP }}/{{ MaxHP }}</strong>
+            </v-progress-linear>
             <br />
-            <h3 class="font-weight-medium">ATK: {{ ATK }}</h3>
+            <v-progress-linear
+              color="green"
+              height="18"
+              absolute
+              :value="(this.EXP * 100) / this.MaxExp"
+            >
+              <strong>EXP: {{ EXP }}/{{ MaxExp }}</strong>
+            </v-progress-linear>
+            <br />
+            <v-progress-linear
+              color="amber"
+              height="18"
+              absolute
+              :value="(this.Current * 100) / this.MaxCap"
+            >
+              <strong>Inventory: {{ Current }}/{{ MaxCap }}</strong>
+            </v-progress-linear>
+            <br />
             <br />
             <h3 class="font-weight-medium">Map Name: {{ mapName }}</h3>
             <br />
@@ -224,7 +248,6 @@
               Room Description: <br />
               <span v-html="RoomDes"></span>
             </h3>
-            <br />
           </v-card-text>
           <v-card-actions>
             <v-btn @click="dialog_user_list = true">
@@ -292,6 +315,8 @@ export default {
   name: "CommandLine",
   data() {
     return {
+      MaxCap: 0,
+      Current: 0,
       HP: "",
       mapName: "",
       EXP: "",
@@ -364,6 +389,9 @@ export default {
     self.connection.onmessage = function (event) {
       const result = JSON.parse(event.data);
       // ================================================================
+      // console.log(result);
+      self.MaxCap = result.capacity;
+      self.Current = result.currentLoad;
       self.commandOutput = result.content.replaceAll("\n", "<br/>");
       self.mapName = result.mapName;
       self.type = result.type;
