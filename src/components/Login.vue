@@ -74,6 +74,7 @@
                         hint="cannot contains any special characters"
                         persistent-hint
                         clearable
+                        @keydown.enter="createUser"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
@@ -83,6 +84,7 @@
                         type="password"
                         required
                         clearable
+                        @keydown.enter="createUser"
                       ></v-text-field>
                     </v-col>
                   </v-row>
