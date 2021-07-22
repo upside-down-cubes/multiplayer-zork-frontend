@@ -108,18 +108,22 @@ import store from "./store";
 import router from "./router";
 export default {
   name: "App",
+  metaInfo: {
+    title: "Mult / Zork",
+    titleTemplate: "%s | My Awesome Webapp",
+  },
   data: () => ({
     contentAlert: "",
     colorAlert: "",
     alert: false,
   }),
+  created() {
+    document.title = "Mult / Zork";
+  },
   methods: {
     async logout() {
       // send request to logout via get method
       let result = await Vue.axios.get("/api/logout");
-      console.log("clicked logout button");
-      console.log(result.data);
-      console.log("username: " + this.$store.state.username);
       if (
         result.data.success &&
         this.$store.state.username !== null &&
@@ -130,10 +134,8 @@ export default {
         this.contentAlert =
           "You successfully log out as " + this.$store.state.username;
         await store.dispatch("clearUser", result.data);
-        console.log("done dispatch");
         await router.push({ name: "Login" });
       } else {
-        console.log("fail");
         this.colorAlert = "red";
         this.contentAlert = "Fail to log out. Please try again";
       }

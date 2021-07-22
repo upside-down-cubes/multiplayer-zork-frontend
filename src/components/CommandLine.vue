@@ -360,7 +360,6 @@ export default {
     self.connection = new WebSocket("ws://localhost:8080/api/commandline");
     self.connection.onmessage = function (event) {
       const result = JSON.parse(event.data);
-      console.log(result);
       // ================================================================
       self.commandOutput = result.content.replaceAll("\n", "<br/>");
       self.type = result.type;
